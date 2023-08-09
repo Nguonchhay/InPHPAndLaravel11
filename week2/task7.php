@@ -62,7 +62,7 @@ if (!empty($_GET['input'])) {
     </head>
     <body>
         <div class="container">
-            <h1>Task 6</h1>
+            <h1>Task 7</h1>
 
             <div class="col-4">
                 <form action="" method="GET">
