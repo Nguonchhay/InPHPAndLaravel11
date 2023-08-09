@@ -16,6 +16,18 @@
 
             <div class="col-4">
                 <form action="task6_submit.php" method="POST">
+                    
+                    <div class="mb-3">
+                        <p  class="form-label">
+                            <?php
+                                // if (!empty($_GET['errMessage'])) {
+                                //     echo $_GET['errMessage'];
+                                // }
+                            ?>
+                            <?php echo $_GET['errMessage'] ?? '' ?>
+                        </p>
+                    </div>
+
                     <div class="mb-3">
                         <label for="input1" class="form-label">Input 1</label>
                         <input type="number" class="form-control" name="input1" id="input1" placeholder="">
