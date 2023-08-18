@@ -1,3 +1,9 @@
+<?php
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+?>
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -16,33 +22,28 @@
 
             <div class="col-4">
                 <form action="task8_submit.php" method="POST">
-                    
                     <div class="mb-3">
-                        <p  class="form-label">
-                            <?php
-                                // if (!empty($_GET['errMessage'])) {
-                                //     echo $_GET['errMessage'];
-                                // }
-                            ?>
-                            <?php echo $_GET['errMessage'] ?? '' ?>
+                        <label for="fullname" class="form-label">Fullname *</label>
+                        <input type="text" class="form-control" name="fullname" id="fullname" value="<?php echo $_SESSION['fullname'] ?? '' ?>" placeholder="Last name First Name">
+                        <p  class="form-label text-danger">
+                            <?php echo $_SESSION['errFullName'] ?? '' ?>
                         </p>
                     </div>
 
                     <div class="mb-3">
-                        <label for="fullname" class="form-label">Fullname *</label>
-                        <input type="text" class="form-control" name="fullname" id="fullname" placeholder="Last name First Name">
-                    </div>
-
-                    <div class="mb-3">
                         <label for="input2" class="form-label">Email *</label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="test@example.com">
+                        <input type="email" class="form-control" name="email" id="email" value="<?php echo $_SESSION['email'] ?? '' ?>" placeholder="test@example.com">
+                        <p  class="form-label text-danger">
+                            <?php echo $_SESSION['errEmail'] ?? '' ?>
+                        </p>
                     </div>
 
                     <div class="mb-3">
                         <label for="message" class="form-label">Message *</label>
-                        <textarea class="form-control" name="message" id="message">
-
-                        </textarea>
+                        <textarea class="form-control" name="message" id="message"><?php echo $_SESSION['message'] ?? '' ?></textarea>
+                        <p  class="form-label text-danger">
+                            <?php echo $_SESSION['errMessage'] ?? '' ?>
+                        </p>
                     </div>
 
                     <div class="mb-3">
