@@ -10,11 +10,9 @@
     }
 
     $student = [];
-    for ($i = 0; $i < count($_SESSION['students']); $i++) {
-        $stu = $_SESSION['students'][$i];
-        if (intval($stu['id']) === $selectedId) {
+    foreach ($_SESSION['students'] as $key => $stu) {
+        if ($key === $selectedId) {
             $student = $stu;
-            break;
         }
     }
 

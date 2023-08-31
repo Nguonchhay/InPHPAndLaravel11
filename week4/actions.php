@@ -17,35 +17,25 @@ if (!isset($_SESSION['students'])) {
 $from = $_POST['from'];
 switch($from) {
     case 'create':
-        $_SESSION['students'][] = [
-            'id' => count($_SESSION['students']) + 1,
+        $newId = count($_SESSION['students']) + 1;
+        $_SESSION['students'][$newId] = [
+            'id' => $newId,
             'fullname' => $_POST['fullname'],
             'gender' => $_POST['gender'],
             'address' => $_POST['address']
         ];
         break;
     case 'update':
-        $studentData = [
-            'id' => $_POST['id'],
+        $selectedId = $_POST['id'];
+        $_SESSION['students'][$selectedId] = [
+            'id' => $selectedId,
             'fullname' => $_POST['fullname'],
             'gender' => $_POST['gender'],
             'address' => $_POST['address']
         ];
-        for ($i = 0; $i < count($_SESSION['students']); $i++) {
-            if (intval($_POST['id']) === intval($_SESSION['students'][$i]['id'])) {
-                $_SESSION['students'][$i] = $studentData;
-                break;
-            }
-        }
         break;
     case 'delete':
-        $newStudents = [];
-        for ($i = 0; $i < count($_SESSION['students']); $i++) {
-            if (intval($_POST['id']) !== intval($_SESSION['students'][$i]['id'])) {
-                $newStudents[] = $_SESSION['students'][$i];
-            }
-        }
-        $_SESSION['students'] = $newStudents;
+        unset($_SESSION['students'][$_POST['id']]);
         break;
 }
 
