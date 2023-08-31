@@ -8,7 +8,6 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
-
 ?>
 
 <!doctype html>
@@ -43,18 +42,21 @@ error_reporting(E_ALL);
                     <tbody>
                         <?php
                             if (isset($_SESSION['students'])) {
-                                $i = 1;
                                 foreach ($_SESSION['students'] as $student) {
                                     echo '
                                         <tr>
-                                            <td scope="row">' . $i++ . '</td>
+                                            <td scope="row">' . $student['id'] . '</td>
                                             <td>' . $student['fullname'] . '</td>
                                             <td>' . $student['gender'] . '</td>
                                             <td>' . $student['address'] . '</td>
                                             <td>
                                                 <div class="btn-group" role="group" aria-label="Student Action">
-                                                    <a href="edit_student.php" class="btn btn-default">Edit</a>
-                                                    <a href="" class="btn btn-danger">Delete</a>
+                                                    <a href="edit_student.php?id=' . $student['id'] . '" class="btn btn-default">Edit</a>
+                                                    <form action="actions.php" method="POST" onsubmit="return confirm(\'Are you sure?\')">
+                                                        <input type="hidden" name="from" value="delete"/>
+                                                        <input type="hidden" name="id" value="' . $student['id'] . '"/>
+                                                        <button type="submit" class="btn btn-danger">Delete</a>
+                                                    </form>
                                                 </div>
                                             </td>
                                         </tr>

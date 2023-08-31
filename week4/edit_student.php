@@ -2,6 +2,26 @@
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
+
+    $selectedId = intval($_GET['id'] ?? 0);
+    if ($selectedId === 0) {
+        header("Location: students.php");
+        exit();
+    }
+
+    $student = [];
+    for ($i = 0; $i < count($_SESSION['students']); $i++) {
+        $stu = $_SESSION['students'][$i];
+        if (intval($stu['id']) === $selectedId) {
+            $student = $stu;
+            break;
+        }
+    }
+
+    if (!count($student)) {
+        header("Location: students.php");
+        exit();
+    }
 ?>
 
 <!doctype html>
@@ -22,10 +42,11 @@
 
             <div class="col-4">
                 <form action="actions.php" method="POST">
-                    <input type="hidden" name="from" value="create"/>
+                    <input type="hidden" name="from" value="update"/>
+                    <input type="hidden" name="id" value="<?=$selectedId?>"/>
                     <div class="mb-3">
                         <label for="fullname" class="form-label">Fullname *</label>
-                        <input type="text" class="form-control" name="fullname" id="fullname" value="<?php echo $_SESSION['fullname'] ?? '' ?>" placeholder="Last name First Name">
+                        <input type="text" class="form-control" name="fullname" id="fullname" value="<?php echo $student['fullname'] ?>" placeholder="Last name First Name">
                     
                     </div>
 
@@ -33,15 +54,15 @@
                         <label for="input2" class="form-label">Gender *</label>
                         <select name="gender" class="form-select" aria-label="---select a gender---">
                             <option selected>---select a gender---</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Other not mention">Other not mention</option>
+                            <option <?php if ($student['gender'] === 'Male') { echo 'selected'; } ?> value="Male">Male</option>
+                            <option <?php if ($student['gender'] === 'Female') { echo 'selected'; } ?> value="Female">Female</option>
+                            <option <?php if ($student['gender'] === 'Other not mention') { echo 'selected'; } ?> value="Other not mention">Other not mention</option>
                         </select>
                     </div>
 
                     <div class="mb-3">
                         <label for="message" class="form-label">Address *</label>
-                        <textarea class="form-control" name="address" id="address"><?php echo $_SESSION['address'] ?? '' ?></textarea>
+                        <textarea class="form-control" name="address" id="address"><?php echo $student['address'] ?></textarea>
                        
                     </div>
 
