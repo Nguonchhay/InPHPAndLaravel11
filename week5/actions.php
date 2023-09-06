@@ -36,7 +36,8 @@ switch($from) {
         ]);
         break;
     case 'delete':
-        unset($_SESSION['students'][$_POST['id']]);
+        $student = new Student($_POST['id']);
+        $student->remove();
         break;
 }
 

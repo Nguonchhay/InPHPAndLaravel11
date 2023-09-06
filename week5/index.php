@@ -9,6 +9,13 @@ ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
 require_once("./models/Student.php");
+require_once("./models/User.php");
+
+if (!User::isAuth()) {
+    header("Location: login.php");
+    exit();
+}
+
 
 $students = Student::getList();
 

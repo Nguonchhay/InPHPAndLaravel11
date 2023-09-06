@@ -36,9 +36,9 @@ class Student {
         $_SESSION['students'][$this->id] = $studentData;
     }
 
-    public function remove($id)
+    public function remove()
     {
-
+        unset($_SESSION['students'][$this->id]);
     }
 }
 
