@@ -11,9 +11,9 @@ class Student {
     private $address;
 
 
-    public function __construct()
+    public function __construct($id = 0)
     {
-        $id = 0;
+        $this->id = $id;
         if (!isset($_SESSION['students'])) {
             $_SESSION['students'] = [];
         }
@@ -33,7 +33,7 @@ class Student {
 
     public function update($studentData)
     {
-
+        $_SESSION['students'][$this->id] = $studentData;
     }
 
     public function remove($id)

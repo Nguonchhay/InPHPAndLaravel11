@@ -27,12 +27,13 @@ switch($from) {
         break;
     case 'update':
         $selectedId = $_POST['id'];
-        $_SESSION['students'][$selectedId] = [
+        $student = new Student($selectedId);
+        $student->update([
             'id' => $selectedId,
             'fullname' => $_POST['fullname'],
             'gender' => $_POST['gender'],
             'address' => $_POST['address']
-        ];
+        ]);
         break;
     case 'delete':
         unset($_SESSION['students'][$_POST['id']]);
