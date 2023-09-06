@@ -12,9 +12,26 @@ if (session_status() === PHP_SESSION_NONE) {
 
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: students.php');
+    header('Location: index.php');
     exit();
 }
 
+$from = $_POST['from'];
+
+if ($from === 'register') {
+    $formData = $_POST;
+    User::save($formData);
+} else if ($from === 'login') {
+    $formData = $_POST;
+    $queryUser = User::checkAuth($formData);
+    if (empty($queryUser)) {
+        header('Location: login.php?err="invalid"');
+        exit();
+    }
+    $_SESSION['user'] = $queryUser;
+}
+
+header('Location: index.php');
+exit();
 
 ?>
