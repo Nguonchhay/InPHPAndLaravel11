@@ -13,10 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [\App\Http\Controllers\PageController::class, 'home'])->name('pages.home');
+Route::get('/about-us', [\App\Http\Controllers\PageController::class, 'about'])->name('pages.about');
 
 Auth::routes();
 
-Route::get('/categories', [\App\Http\Controllers\CategoryController::class, 'index']);
+Route::get('/admin/categories', [\App\Http\Controllers\CategoryController::class, 'index'])->name('categories.index');
