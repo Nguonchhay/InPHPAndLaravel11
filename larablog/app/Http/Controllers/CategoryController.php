@@ -14,7 +14,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::get();
-        return view('categories.index');
+        return view('categories.index')->with('categories', $categories);
     }
 
     /**
@@ -22,39 +22,50 @@ class CategoryController extends Controller
      */
     public function create()
     {
-
+        return view('categories.create');
     }
 
     /**
      * Create new record from submit data
      */
-    public function store()
+    public function store(Request $request)
     {
-
-    }
-
-    /**
-     * Display detail information
-     */
-    public function show()
-    {
-
+        if (!$request->has('title')) {
+            return back()->withErrors([
+                'title' => 'Title is required!'
+            ]);
+        }
+        $input = $request->all();
+        $category = new Category();
+        $category->title = $input['title'];
+        $category->description = $input['description'];
+        $category->save();
+        return redirect(route('categories.index'));
     }
 
     /**
      * Show edit form
      */
-    public function edit()
+    public function edit(Category $category)
     {
-
+        return view('categories.edit')->with('category', $category);
     }
 
     /**
      * Update existing record from submit data
      */
-    public function update()
+    public function update(Category $category, Request $request)
     {
-
+        if (!$request->has('title')) {
+            return back()->withErrors([
+                'title' => 'Title is required!'
+            ]);
+        }
+        $input = $request->all();
+        $category->title = $input['title'];
+        $category->description = $input['description'];
+        $category->save();
+        return redirect(route('categories.index'));
     }
 
     /**
