@@ -71,9 +71,10 @@ class CategoryController extends Controller
     /**
      * Remove existing record
      */
-    public function destroy()
+    public function destroy(Category $category)
     {
-
+        $category->delete();
+        return redirect(route('categories.index'));
     }
 
     /**

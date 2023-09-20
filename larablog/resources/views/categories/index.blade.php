@@ -27,7 +27,11 @@
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-primary">Edit</a>
-                                <button type="button" class="btn btn-danger">Delete</button>
+                                <form onsubmit="return confirm('Are you sure?');" action="{{ route('categories.destroy', $category->id) }}" method="POST">
+                                    @csrf
+                                    @method("DELETE")
+                                    <button type="submit" data-id="{{ $category->id }}" class="btn btn-danger btn-category-remove">Delete</button>
+                                </form>
                             </div>
                         </td>
                     </tr>

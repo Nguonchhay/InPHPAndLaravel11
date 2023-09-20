@@ -23,3 +23,4 @@ Route::get('/admin/categories/create', [\App\Http\Controllers\CategoryController
 Route::post('/admin/categories', [\App\Http\Controllers\CategoryController::class, 'store'])->name('categories.store');
 Route::get('/admin/categories/{category}', [\App\Http\Controllers\CategoryController::class, 'edit'])->name('categories.edit');
 Route::put('/admin/categories/{category}', [\App\Http\Controllers\CategoryController::class, 'update'])->name('categories.update');
+Route::delete('/admin/categories/{category}', [\App\Http\Controllers\CategoryController::class, 'destroy'])->name('categories.destroy');
