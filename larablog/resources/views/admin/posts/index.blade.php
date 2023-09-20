@@ -6,6 +6,7 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
+                <th scope="col">Author</th>
                 <th scope="col">Category</th>
                 <th scope="col">Title</th>
                 <th scope="col">Image</th>
@@ -24,7 +25,8 @@
                 @foreach($posts as $post)
                     <tr>
                         <td scope="row">{{ $loop->index + 1 }}</td>
-                        <td>{{ $post->category_id }}</td>
+                        <td>{{ $post->author?->name }}</td>
+                        <td>{{ $post->category->title }}</td>
                         <td>{{ $post->title }}</td>
                         <td>
                             @if(!empty($post->image))
