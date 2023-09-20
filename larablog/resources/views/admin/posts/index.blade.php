@@ -6,7 +6,9 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
+                <th scope="col">Category</th>
                 <th scope="col">Title</th>
+                <th scope="col">Image</th>
                 <th scope="col">Description</th>
                 <th scope="col">
                     <a href="{{ route('admin.posts.create') }}">+ New</a>
@@ -22,7 +24,13 @@
                 @foreach($posts as $post)
                     <tr>
                         <td scope="row">{{ $loop->index + 1 }}</td>
+                        <td>{{ $post->category_id }}</td>
                         <td>{{ $post->title }}</td>
+                        <td>
+                            @if(!empty($post->image))
+                                <img src="{{ asset('/storage/posts/' . $post->image) }}" class="w-100"/>
+                            @endif
+                        </td>
                         <td>{{ $post->description }}</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">

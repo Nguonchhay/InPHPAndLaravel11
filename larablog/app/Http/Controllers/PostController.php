@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Category;
 use App\Models\Post;
 
 class PostController extends Controller
@@ -22,7 +23,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $categories = Category::pluck('title', 'id')->toArray();
+        return view('admin.posts.create')->with('categories', $categories);
     }
 
     /**
@@ -35,11 +37,26 @@ class PostController extends Controller
                 'title' => 'Title is required!'
             ]);
         }
+        if (!$request->has('category_id')) {
+            return back()->withErrors([
+                'category_id' => 'Category is required!'
+            ]);
+        }
         $input = $request->all();
+
         $post = new Post();
         $post->title = $input['title'];
+        $post->category_id = $input['category_id'];
+        $post->author_id = 1;
         $post->description = $input['description'];
+        $uploadImage = $request->file('selectedImage');
+        if (!empty($uploadImage)) {
+            $filename = time() . '_' . $uploadImage->getClientOriginalName();
+            $uploadImage->storeAs('public/posts', $filename);
+            $post->image = $filename;
+        }
         $post->save();
+
         return redirect(route('admin.posts.index'));
     }
 
