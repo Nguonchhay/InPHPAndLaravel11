@@ -39,4 +39,7 @@
             @endif
         </tbody>
     </table>
+    <div class="pagination">
+        {{ $categories->links() }}
+    </div>
 @endsection
