@@ -23,7 +23,7 @@
         </div>
         <div class="mb-3">
             <label for="selectedImage" class="form-label">Image</label>
-            <input type="file" required class="form-control" id="selectedImage" name="selectedImage">
+            <input type="file" class="form-control" id="selectedImage" name="selectedImage">
         </div>
         <div class="mb-3">
             <button type="submit" class="btn btn-primary">Save</button>

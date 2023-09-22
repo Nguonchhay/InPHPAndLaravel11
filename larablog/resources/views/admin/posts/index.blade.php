@@ -36,12 +36,17 @@
                         <td>{{ $post->description }}</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <a href="{{ route('admin.posts.edit', $post->id) }}" class="btn btn-primary">Edit</a>
-                                <form onsubmit="return confirm('Are you sure?');" action="{{ route('admin.posts.destroy', $post->id) }}" method="POST">
-                                    @csrf
-                                    @method("DELETE")
-                                    <button type="submit" data-id="{{ $post->id }}" class="btn btn-danger btn-category-remove">Delete</button>
-                                </form>
+                                @can('updatePost', $post)
+                                    <a href="{{ route('admin.posts.edit', $post->id) }}" class="btn btn-primary">Edit</a>
+                                @endcan
+
+                                @can('deletePost', $post)
+                                    <form onsubmit="return confirm('Are you sure?');" action="{{ route('admin.posts.destroy', $post->id) }}" method="POST">
+                                        @csrf
+                                        @method("DELETE")
+                                        <button type="submit" data-id="{{ $post->id }}" class="btn btn-danger btn-category-remove">Delete</button>
+                                    </form>
+                                @endcan
                             </div>
                         </td>
                     </tr>

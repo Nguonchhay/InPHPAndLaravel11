@@ -47,7 +47,7 @@ class PostController extends Controller
         $post = new Post();
         $post->title = $input['title'];
         $post->category_id = $input['category_id'];
-        $post->author_id = 1;
+        $post->author_id = auth()->id();
         $post->description = $input['description'];
         $uploadImage = $request->file('selectedImage');
         if (!empty($uploadImage)) {

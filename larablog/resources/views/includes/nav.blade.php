@@ -14,6 +14,12 @@
                 @if(Auth::user())
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ route('categories.index') }}">Categories</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ route('admin.posts.index') }}">Posts</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" href="javascript:void">
+                            <i class="fa-regular fa-user"></i>
+                            {{ Auth::user()->name }}
+                        </a>
+                    </li>
                 @endif
             </ul>
         </div>
