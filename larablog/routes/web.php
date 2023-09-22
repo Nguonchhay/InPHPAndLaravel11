@@ -18,20 +18,30 @@ Route::get('/about-us', [\App\Http\Controllers\PageController::class, 'about'])-
 
 Auth::routes();
 
-Route::get('/admin/categories', [\App\Http\Controllers\CategoryController::class, 'index'])->name('categories.index');
-Route::get('/admin/categories/create', [\App\Http\Controllers\CategoryController::class, 'create'])->name('categories.create');
-Route::post('/admin/categories', [\App\Http\Controllers\CategoryController::class, 'store'])->name('categories.store');
-Route::get('/admin/categories/{category}', [\App\Http\Controllers\CategoryController::class, 'edit'])->name('categories.edit');
-Route::put('/admin/categories/{category}', [\App\Http\Controllers\CategoryController::class, 'update'])->name('categories.update');
-Route::delete('/admin/categories/{category}', [\App\Http\Controllers\CategoryController::class, 'destroy'])->name('categories.destroy');
-
 Route::group([
-    'prefix' => '/admin/posts'
+    'middleware' => 'auth'
 ], function() {
-    Route::get('/', [\App\Http\Controllers\PostController::class, 'index'])->name('admin.posts.index');
-    Route::get('/create', [\App\Http\Controllers\PostController::class, 'create'])->name('admin.posts.create');
-    Route::post('/', [\App\Http\Controllers\PostController::class, 'store'])->name('admin.posts.store');
-    Route::get('/{category}', [\App\Http\Controllers\PostController::class, 'edit'])->name('admin.posts.edit');
-    Route::put('/{category}', [\App\Http\Controllers\PostController::class, 'update'])->name('admin.posts.update');
-    Route::delete('/{category}', [\App\Http\Controllers\PostController::class, 'destroy'])->name('admin.posts.destroy');    
+
+    Route::group([
+        'middleware' => 'admin_role'
+    ], function() {
+        Route::get('/admin/categories', [\App\Http\Controllers\CategoryController::class, 'index'])->name('categories.index');
+        Route::get('/admin/categories/create', [\App\Http\Controllers\CategoryController::class, 'create'])->name('categories.create');
+        Route::post('/admin/categories', [\App\Http\Controllers\CategoryController::class, 'store'])->name('categories.store');
+        Route::get('/admin/categories/{category}', [\App\Http\Controllers\CategoryController::class, 'edit'])->name('categories.edit');
+        Route::put('/admin/categories/{category}', [\App\Http\Controllers\CategoryController::class, 'update'])->name('categories.update');
+        Route::delete('/admin/categories/{category}', [\App\Http\Controllers\CategoryController::class, 'destroy'])->name('categories.destroy');
+
+    });
+    
+    Route::group([
+        'prefix' => '/admin/posts'
+    ], function() {
+        Route::get('/', [\App\Http\Controllers\PostController::class, 'index'])->name('admin.posts.index');
+        Route::get('/create', [\App\Http\Controllers\PostController::class, 'create'])->name('admin.posts.create');
+        Route::post('/', [\App\Http\Controllers\PostController::class, 'store'])->name('admin.posts.store');
+        Route::get('/{category}', [\App\Http\Controllers\PostController::class, 'edit'])->name('admin.posts.edit');
+        Route::put('/{category}', [\App\Http\Controllers\PostController::class, 'update'])->name('admin.posts.update');
+        Route::delete('/{category}', [\App\Http\Controllers\PostController::class, 'destroy'])->name('admin.posts.destroy');    
+    });
 });
