@@ -65,7 +65,11 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit')->with('post', $post);
+        $categories = Category::pluck('title', 'id')->toArray();
+        return view('admin.posts.edit')->with([
+            'post' => $post,
+            'categories' => $categories
+        ]);
     }
 
     /**

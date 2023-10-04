@@ -40,8 +40,8 @@ Route::group([
         Route::get('/', [\App\Http\Controllers\PostController::class, 'index'])->name('admin.posts.index');
         Route::get('/create', [\App\Http\Controllers\PostController::class, 'create'])->name('admin.posts.create');
         Route::post('/', [\App\Http\Controllers\PostController::class, 'store'])->name('admin.posts.store');
-        Route::get('/{category}', [\App\Http\Controllers\PostController::class, 'edit'])->name('admin.posts.edit');
-        Route::put('/{category}', [\App\Http\Controllers\PostController::class, 'update'])->name('admin.posts.update');
-        Route::delete('/{category}', [\App\Http\Controllers\PostController::class, 'destroy'])->name('admin.posts.destroy');    
+        Route::get('/{post}', [\App\Http\Controllers\PostController::class, 'edit'])->name('admin.posts.edit')->middleware('can:updatePost,post');
+        Route::put('/{post}', [\App\Http\Controllers\PostController::class, 'update'])->name('admin.posts.update')->middleware('can:updatePost,post');
+        Route::delete('/{post}', [\App\Http\Controllers\PostController::class, 'destroy'])->name('admin.posts.destroy')->middleware('can:deletePost,post');
     });
 });
