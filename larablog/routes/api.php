@@ -28,6 +28,14 @@ Route::group([
 });
 
 Route::get('/posts', [\App\Http\Controllers\Api\PostAPIController::class, 'index']);
+Route::group([
+    'prefix' => 'posts',
+    'middleware' => ['auth:sanctum']
+], function() {
+    Route::post('/', [\App\Http\Controllers\Api\PostAPIController::class, 'store']);
+    Route::put('/{post}', [\App\Http\Controllers\Api\PostAPIController::class, 'update']);
+    Route::delete('/{post}', [\App\Http\Controllers\Api\PostAPIController::class, 'destroy']);
+});
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

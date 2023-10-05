@@ -41,4 +41,46 @@ class PostAPIController extends Controller
         ];
         return response()->json($res);
     }
+
+    /**
+     * Create new record from submit data
+     */
+    public function store(Request $request)
+    {
+        if (!$request->has('title')) {
+            return response()->json([
+                'statusCode' => 400,
+                'message' => 'Title is required!'
+            ]);
+        }
+        if (!$request->has('category_id')) {
+            return response()->json([
+                'statusCode' => 400,
+                'message' => 'Category is required!'
+            ]);
+        }
+        $input = $request->all();
+
+        $post = new Post();
+        $post->title = $input['title'];
+        $post->category_id = $input['category_id'];
+        $post->author_id = $request->user()->id;
+        $post->description = $input['description'];
+
+        $baseImage = $request->get('base_image') ?? null;
+        if (!empty($baseImage)) {
+            // Decode image to store as a file
+        }
+        
+        // Handle image upload
+
+        $post->save();
+
+        $res = [
+            'statusCode' => 200,
+            'data' => [$post],
+            'message' => 'Post is stored successfully'
+        ];
+        return response()->json($res);
+    }
 }
