@@ -15,6 +15,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/categories', [\App\Http\Controllers\Api\CategoryAPIController::class, 'index']);
+
+Route::post('/login', [\App\Http\Controllers\Api\UserAPIController::class, 'login']);
+
+Route::group([
+    'prefix' => 'categories',
+    'middleware' => ['auth:sanctum']
+], function() {
+    Route::post('/', [\App\Http\Controllers\Api\CategoryAPIController::class, 'store']);
+    Route::put('/{category}', [\App\Http\Controllers\Api\CategoryAPIController::class, 'update']);
+    Route::delete('/{category}', [\App\Http\Controllers\Api\CategoryAPIController::class, 'destroy']);
+});
+
 Route::get('/posts', [\App\Http\Controllers\Api\PostAPIController::class, 'index']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
