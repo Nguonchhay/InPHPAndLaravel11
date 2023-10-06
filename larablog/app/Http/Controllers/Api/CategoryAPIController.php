@@ -19,6 +19,16 @@ class CategoryAPIController extends Controller
         return response()->json($res);
     }
 
+    public function show(Category $category)
+    {
+        $res = [
+            'statusCode' => 200,
+            'data' => $category,
+            'message' => 'Category list'
+        ];
+        return response()->json($res);
+    }
+
     /**
      * Create new record from submit data
      */
